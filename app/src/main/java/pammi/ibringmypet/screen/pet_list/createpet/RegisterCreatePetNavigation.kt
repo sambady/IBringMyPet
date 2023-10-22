@@ -17,6 +17,7 @@ fun registerCreatePetNavigation(navGraphBuilder: NavGraphBuilder, navController 
                 val viewModel = it.sharedViewModel<CreatePetViewModel>(navController = navController)
                 when (progressStep) {
                     ProgressStep.PetType -> selectPetType(navController, viewModel)
+                    ProgressStep.PetSex -> selectPetSex(navController, viewModel)
                     ProgressStep.PetName -> selectPetName(navController, viewModel)
                     ProgressStep.PetBreed -> selectPetBreed(navController, viewModel)
                     ProgressStep.PetBirthday -> selectPetBirthday(navController, viewModel)

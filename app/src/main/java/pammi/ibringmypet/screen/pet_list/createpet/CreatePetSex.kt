@@ -30,24 +30,24 @@ import androidx.navigation.compose.rememberNavController
 
 
 @Composable
-internal fun selectPetType(navContoller: NavController, petModel: CreatePetViewModel) {
+internal fun selectPetSex(navContoller: NavController, petModel: CreatePetViewModel) {
     var selectedPetType by remember { mutableStateOf(petModel.petType) }
 
     var nextButtonEnabled by remember { mutableStateOf(petModel.petType.isNotEmpty()) }
 
     @Composable
-    fun SelectPetTypeButton(petType: String) {
+    fun SelectPetSexButton(petSex: String) {
         Button(
-            colors = ButtonDefaults.buttonColors(containerColor = if (selectedPetType === petType) Color.Red else Color.Gray),
+            colors = ButtonDefaults.buttonColors(containerColor = if (selectedPetType === petSex) Color.Red else Color.Gray),
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier.width(100.dp).height(100.dp),
             onClick = {
-                selectedPetType = petType
+                selectedPetType = petSex
                 nextButtonEnabled = true
-                petModel.petType = petType
+                petModel.petSex = petSex
             })
         {
-            Text(petType)
+            Text(petSex)
         }
     }
 
@@ -60,7 +60,7 @@ internal fun selectPetType(navContoller: NavController, petModel: CreatePetViewM
             {
                 Button(
                     onClick = {
-                        navContoller.navigate(ProgressStep.PetSex.navigationName)
+                        navContoller.navigate(ProgressStep.PetName.navigationName)
                     }, enabled = nextButtonEnabled, modifier = Modifier.fillMaxWidth()
 
                 ) {
@@ -79,15 +79,14 @@ internal fun selectPetType(navContoller: NavController, petModel: CreatePetViewM
         )
         {
             Spacer(modifier = Modifier.height(100.dp))
-            Text(text = "Select pet type", fontSize = 32.sp)
+            Text(text = "Select pet sex", fontSize = 32.sp)
             Spacer(modifier = Modifier.height(24.dp))
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.SpaceAround,
                 modifier = Modifier.fillMaxWidth().absolutePadding(left = 16.dp, right = 16.dp)
             ) {
-                SelectPetTypeButton("Dog")
-                SelectPetTypeButton("Cat")
-                SelectPetTypeButton("Other")
+                SelectPetSexButton("Boy")
+                SelectPetSexButton("Girl")
             }
         }
     }
@@ -95,6 +94,6 @@ internal fun selectPetType(navContoller: NavController, petModel: CreatePetViewM
 
 @Composable
 @Preview
-fun selectTypePreview() {
-    selectPetType(navContoller = rememberNavController(), petModel = CreatePetViewModel())
+fun selectSexPreview() {
+    selectPetSex(navContoller = rememberNavController(), petModel = CreatePetViewModel())
 }
