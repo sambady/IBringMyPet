@@ -1,4 +1,4 @@
-package pammi.ibringmypet.screen.createpet
+package pammi.ibringmypet.screen.pet_list.createpet
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
