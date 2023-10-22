@@ -11,25 +11,28 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
 
 @Composable
-internal fun createPetName(navContoller: NavController, petModel: CreatePetViewModel) {
-    var petName by remember { mutableStateOf("") }
+internal fun selectPetName(navContoller: NavController, petModel: CreatePetViewModel) {
+    var petName by remember { mutableStateOf(petModel.petName) }
 
-    var nextButtonEnabled by remember { mutableStateOf(false) }
-    TextField(
-        value = petName,
-        onValueChange = {
-            petName = it
-            petModel.petName = it
-            nextButtonEnabled = petName.isNotEmpty()
-        },
-        label = { Text("Pet name") },
-        singleLine = true
-    )
+    var nextButtonEnabled by remember { mutableStateOf(petModel.petName.isNotEmpty()) }
 
-    Button(onClick = {
-        navContoller.navigate(ProgressStep.PetBreed.navigationName)
-    }, enabled = nextButtonEnabled)
-    {
-        Text("Next")
+    CreatePetScaffold(navContoller, ProgressStep.PetName, true) {
+        TextField(
+            value = petName,
+            onValueChange = {
+                petName = it
+                petModel.petName = it
+                nextButtonEnabled = petName.isNotEmpty()
+            },
+            label = { Text("Pet name") },
+            singleLine = true
+        )
+
+        Button(onClick = {
+            navContoller.navigate(ProgressStep.PetBreed.navigationName)
+        }, enabled = nextButtonEnabled)
+        {
+            Text("Next")
+        }
     }
 }

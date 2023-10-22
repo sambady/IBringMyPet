@@ -3,8 +3,10 @@ package pammi.ibringmypet
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -21,6 +23,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -66,7 +70,10 @@ fun mainScaffold(navController : NavController, currentSelection : MainBottomBar
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxWidth()
-                .verticalScroll(rememberScrollState()),
+                .fillMaxHeight()
+                .verticalScroll(rememberScrollState())
+                .background(
+                    brush = Brush.horizontalGradient(listOf(Color.Red, Color.Blue))),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -74,8 +81,6 @@ fun mainScaffold(navController : NavController, currentSelection : MainBottomBar
         }
     }
 }
-
-
 
 @Composable
 @Preview

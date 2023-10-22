@@ -1,9 +1,11 @@
 package pammi.ibringmypet.screen.createpet
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import pammi.ibringmypet.utils.sharedViewModel
 
@@ -13,44 +15,19 @@ fun registerCreatePetNavigation(navGraphBuilder: NavGraphBuilder, navController 
         ProgressStep.values().forEach { progressStep ->
             composable(progressStep.navigationName) {
                 val viewModel = it.sharedViewModel<CreatePetViewModel>(navController = navController)
-                Column {
-                    when (progressStep) {
-                        ProgressStep.PetType -> createPetScafflold(
-                            navController,
-                            progressStep,
-                            false
-                        ) {
-                            selectPetType(navController, viewModel)
-                        }
-
-                        ProgressStep.PetName -> createPetScafflold(
-                            navController,
-                            progressStep,
-                            true
-                        ) {
-                            createPetName(navController, viewModel)
-                        }
-
-                        ProgressStep.PetBreed -> createPetScafflold(
-                            navController,
-                            progressStep,
-                            true
-                        ) {
-                            selectPetBreed(navController, viewModel)
-                        }
-
-                        ProgressStep.PetBirthday -> createPetScafflold(
-                            navController,
-                            progressStep,
-                            true
-                        ) {
-                            selectPetBirthday(navController, viewModel)
-                        }
-
-                        else -> {}
-                    }
+                when (progressStep) {
+                    ProgressStep.PetType -> selectPetType(navController, viewModel)
+                    ProgressStep.PetName -> selectPetName(navController, viewModel)
+                    ProgressStep.PetBreed -> selectPetBreed(navController, viewModel)
+                    ProgressStep.PetBirthday -> selectPetBirthday(navController, viewModel)
                 }
             }
         }
     }
+}
+
+@Composable
+@Preview
+fun TestCreateType() {
+    selectPetType(rememberNavController(), CreatePetViewModel())
 }

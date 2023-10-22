@@ -17,9 +17,10 @@ import java.time.format.DateTimeFormatter
 fun DatePicker(
     onValueChange: (String) -> Unit = {},
     pattern: String = "yyyy-MM-dd",
+    defautlValue : String = ""
 ) {
 
-    var value by remember { mutableStateOf("") }
+    var value by remember { mutableStateOf(defautlValue) }
 
     val formatter = DateTimeFormatter.ofPattern(pattern)
     val date = if (value.isNotBlank()) LocalDate.parse(value, formatter) else LocalDate.now()

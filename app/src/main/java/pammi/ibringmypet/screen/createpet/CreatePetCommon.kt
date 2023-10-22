@@ -40,7 +40,7 @@ class CreatePetViewModel(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createPetScafflold(navController: NavController, progressStep: ProgressStep, backButtonAvailable : Boolean, content: @Composable () -> Unit) {
+fun CreatePetScaffold(navController: NavController, progressStep: ProgressStep, backButtonAvailable : Boolean, content: @Composable () -> Unit) {
 
     Scaffold(
         topBar = {

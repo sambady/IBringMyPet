@@ -15,25 +15,28 @@ import pammi.ibringmypet.utils.DatePicker
 
 @Composable
 internal fun selectPetBirthday(navContoller: NavController, petModel: CreatePetViewModel) {
-    var nextButtonEnabled by remember { mutableStateOf(false) }
+    var nextButtonEnabled by remember { mutableStateOf(petModel.petBirthday.isNotEmpty()) }
 
-    DatePicker(onValueChange = {
-        nextButtonEnabled = it.isNotEmpty()
-        petModel.petBirthday = it
-    })
+    CreatePetScaffold(navContoller, ProgressStep.PetBirthday, true) {
 
-    Button(onClick = {
-        PetManager.pets.value.add(
-            Pet(
-                petType = petModel.petType,
-                petBreed = petModel.petBreed,
-                petName = petModel.petName
+        DatePicker(onValueChange = {
+            nextButtonEnabled = it.isNotEmpty()
+            petModel.petBirthday = it
+        }, defautlValue = petModel.petBirthday)
+
+        Button(onClick = {
+            PetManager.pets.value.add(
+                Pet(
+                    petType = petModel.petType,
+                    petBreed = petModel.petBreed,
+                    petName = petModel.petName
+                )
             )
-        )
 
-        navContoller.navigate(MainBottomBar.PetList.navigationName)
-    }, enabled = nextButtonEnabled)
-    {
-        Text("Complete")
+            navContoller.navigate(MainBottomBar.PetList.navigationName)
+        }, enabled = nextButtonEnabled)
+        {
+            Text("Complete")
+        }
     }
 }

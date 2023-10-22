@@ -14,46 +14,50 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
 @Composable
-internal fun selectPetBreed(navContoller : NavController, petModel: CreatePetViewModel) {
+internal fun selectPetBreed(navContoller: NavController, petModel: CreatePetViewModel) {
     val possibleBreeds = listOf(
         "taksa normal", "taksa mini", "taksa rabbit", "pudel"
     )
 
-    var nextButtonEnabled by remember { mutableStateOf(false) }
+    var nextButtonEnabled by remember { mutableStateOf(petModel.petBreed.isNotEmpty()) }
 
     var searchResult by remember { mutableStateOf(mutableListOf<String>()) }
 
-    var breedName by remember { mutableStateOf("") }
+    var breedName by remember { mutableStateOf(petModel.petBreed) }
 
-    Column {
-        TextField(
-            value = breedName,
-            onValueChange = {
-                breedName = it
-                petModel.petBreed = it
-                nextButtonEnabled = breedName.isNotEmpty()
+    CreatePetScaffold(navContoller, ProgressStep.PetBreed, true) {
+        Column {
+            TextField(
+                value = breedName,
+                onValueChange = {
+                    breedName = it
+                    petModel.petBreed = it
+                    nextButtonEnabled = breedName.isNotEmpty()
 
-                searchResult = possibleBreeds.filter {
-                    it.contains(breedName)
-                }.toMutableList()
+                    searchResult = possibleBreeds.filter {
+                        it.contains(breedName)
+                    }.toMutableList()
 
-            },
-            label = { Text("Breed") },
-            singleLine = true
-        )
+                },
+                label = { Text("Breed") },
+                singleLine = true
+            )
 
-        searchResult.forEach {
-            Text(text = it, modifier = Modifier.clickable {
-                breedName = it
-                searchResult.clear()
-            })
+            searchResult.forEach {
+                Text(text = it, modifier = Modifier.clickable {
+                    breedName = it
+                    petModel.petBreed = it
+                    nextButtonEnabled = breedName.isNotEmpty()
+                    searchResult.clear()
+                })
+            }
         }
-    }
 
-    Button(onClick = {
-        navContoller.navigate(ProgressStep.PetBirthday.navigationName)
-    }, enabled = nextButtonEnabled)
-    {
-        Text("Next")
+        Button(onClick = {
+            navContoller.navigate(ProgressStep.PetBirthday.navigationName)
+        }, enabled = nextButtonEnabled)
+        {
+            Text("Next")
+        }
     }
 }
